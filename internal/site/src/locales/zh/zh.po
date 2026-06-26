@@ -656,6 +656,7 @@ msgid "Down ({downSystemsLength})"
 msgstr "離線 ({downSystemsLength})"
 
 #: src/components/routes/system/network-sheet.tsx
+#: src/components/systems-table/systems-table-columns.tsx
 msgid "Download"
 msgstr "下載"
 
@@ -717,7 +718,6 @@ msgstr "輸入您的一次性密碼。"
 msgid "Ephemeral"
 msgstr "臨時"
 
-#: src/components/login/auth-form.tsx
 #: src/components/routes/settings/alerts-history-data-table.tsx
 #: src/components/routes/settings/config-yaml.tsx
 #: src/components/routes/settings/heartbeat.tsx
@@ -1550,6 +1550,11 @@ msgstr "系統的虛擬記憶體使用量"
 msgid "Swap Usage"
 msgstr "交換空間使用量"
 
+#: src/components/mode-toggle.tsx
+#: src/components/mode-toggle.tsx
+msgid "Switch theme"
+msgstr ""
+
 #: src/components/add-system.tsx
 #: src/components/alerts-history-columns.tsx
 #: src/components/containers-table/containers-table-columns.tsx
@@ -1659,8 +1664,8 @@ msgstr "發送到電子郵件"
 
 #: src/components/mode-toggle.tsx
 #: src/components/mode-toggle.tsx
-msgid "Toggle theme"
-msgstr "切換主題"
+#~ msgid "Toggle theme"
+#~ msgstr "切換主題"
 
 #: src/components/add-system.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
@@ -1811,6 +1816,7 @@ msgid "Updated every 10 minutes."
 msgstr "每 10 分鐘更新一次。"
 
 #: src/components/routes/system/network-sheet.tsx
+#: src/components/systems-table/systems-table-columns.tsx
 msgid "Upload"
 msgstr "上傳"
 

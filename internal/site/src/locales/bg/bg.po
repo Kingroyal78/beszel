@@ -656,6 +656,7 @@ msgid "Down ({downSystemsLength})"
 msgstr "Офлайн ({downSystemsLength})"
 
 #: src/components/routes/system/network-sheet.tsx
+#: src/components/systems-table/systems-table-columns.tsx
 msgid "Download"
 msgstr "Изтегляне"
 
@@ -717,7 +718,6 @@ msgstr "Въведете Вашата еднократна парола."
 msgid "Ephemeral"
 msgstr "Ефимерен"
 
-#: src/components/login/auth-form.tsx
 #: src/components/routes/settings/alerts-history-data-table.tsx
 #: src/components/routes/settings/config-yaml.tsx
 #: src/components/routes/settings/heartbeat.tsx
@@ -1550,6 +1550,11 @@ msgstr "Изполван swap от системата"
 msgid "Swap Usage"
 msgstr "Използване на swap"
 
+#: src/components/mode-toggle.tsx
+#: src/components/mode-toggle.tsx
+msgid "Switch theme"
+msgstr ""
+
 #: src/components/add-system.tsx
 #: src/components/alerts-history-columns.tsx
 #: src/components/containers-table/containers-table-columns.tsx
@@ -1659,8 +1664,8 @@ msgstr "До имейл(ите)"
 
 #: src/components/mode-toggle.tsx
 #: src/components/mode-toggle.tsx
-msgid "Toggle theme"
-msgstr "Включи тема"
+#~ msgid "Toggle theme"
+#~ msgstr "Включи тема"
 
 #: src/components/add-system.tsx
 #: src/components/routes/settings/tokens-fingerprints.tsx
@@ -1811,6 +1816,7 @@ msgid "Updated every 10 minutes."
 msgstr "Актуализира се на всеки 10 минути."
 
 #: src/components/routes/system/network-sheet.tsx
+#: src/components/systems-table/systems-table-columns.tsx
 msgid "Upload"
 msgstr "Качване"
 
