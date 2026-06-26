@@ -62,6 +62,8 @@ export interface SystemInfo {
 	b: number
 	/** bandwidth bytes */
 	bb?: number
+	/** bandwidth bytes [sent, recv] */
+	bd?: [number, number]
 	/** agent version */
 	v: string
 	/** system is using podman */

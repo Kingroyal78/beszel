@@ -19,7 +19,10 @@ import (
 	gossh "golang.org/x/crypto/ssh"
 )
 
-const defaultDataCacheTimeMs uint16 = 60_000
+const (
+	realtimeDataCacheTimeMs uint16 = 1_000
+	defaultDataCacheTimeMs  uint16 = 60_000
+)
 
 type Agent struct {
 	sync.Mutex                                                                      // Used to lock agent while collecting data
@@ -178,14 +181,13 @@ func (a *Agent) gatherStats(options common.DataRequestOptions) *system.CombinedD
 		}
 	}
 
-	// skip updating systemd services if cache time is not the default 60sec interval
-	if a.systemdManager != nil && cacheTimeMs == defaultDataCacheTimeMs {
+	if a.systemdManager != nil {
 		totalCount := uint16(a.systemdManager.getServiceStatsCount())
 		if totalCount > 0 {
 			numFailed := a.systemdManager.getFailedServiceCount()
 			data.Info.Services = []uint16{totalCount, numFailed}
 		}
-		if a.systemdManager.hasFreshStats {
+		if cacheTimeMs != realtimeDataCacheTimeMs && a.systemdManager.hasFreshStats {
 			data.SystemdServices = a.systemdManager.getServiceStats(nil, false)
 		}
 	}

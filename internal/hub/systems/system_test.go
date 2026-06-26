@@ -49,6 +49,23 @@ func TestCombinedData_MigrateDeprecatedFields(t *testing.T) {
 		}
 	})
 
+	t.Run("Migrate Stats.Bandwidth to Info.BandwidthDir and Info.BandwidthBytes", func(t *testing.T) {
+		cd := &system.CombinedData{
+			Stats: system.Stats{
+				Bandwidth: [2]uint64{123, 456},
+			},
+		}
+		migrateDeprecatedFields(cd, true)
+
+		if cd.Info.BandwidthDir != cd.Stats.Bandwidth {
+			t.Errorf("expected BandwidthDir %v, got %v", cd.Stats.Bandwidth, cd.Info.BandwidthDir)
+		}
+		expectedTotal := cd.Stats.Bandwidth[0] + cd.Stats.Bandwidth[1]
+		if cd.Info.BandwidthBytes != expectedTotal {
+			t.Errorf("expected BandwidthBytes %d, got %d", expectedTotal, cd.Info.BandwidthBytes)
+		}
+	})
+
 	t.Run("Migrate DiskReadPs and DiskWritePs to DiskIO", func(t *testing.T) {
 		cd := &system.CombinedData{
 			Stats: system.Stats{

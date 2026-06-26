@@ -6,7 +6,9 @@ import { getPagePath } from "@nanostores/router"
 import type { CellContext, ColumnDef, HeaderContext } from "@tanstack/react-table"
 import type { ClassValue } from "clsx"
 import {
+	ArrowDownIcon,
 	ArrowUpDownIcon,
+	ArrowUpIcon,
 	ChevronRightSquareIcon,
 	ClockArrowUp,
 	CopyIcon,
@@ -239,7 +241,12 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 			},
 		},
 		{
-			accessorFn: ({ info, status }) => (status !== SystemStatus.Up ? undefined : info.bb),
+			accessorFn: ({ info, status }) => {
+				if (status !== SystemStatus.Up) {
+					return undefined
+				}
+				return info.bd ? info.bd[0] + info.bd[1] : info.bb
+			},
 			id: "net",
 			name: () => t`Net`,
 			size: 0,
@@ -252,12 +259,26 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 					return null
 				}
 				const userSettings = useStore($userSettings, { keys: ["unitNet"] })
-				const { value, unit } = formatBytes(val, true, userSettings.unitNet, false)
-				return (
-					<span className="tabular-nums whitespace-nowrap">
-						{decimalString(value, value >= 100 ? 1 : 2)} {unit}
-					</span>
-				)
+				const formatRate = (bytes: number) => {
+					const { value, unit } = formatBytes(bytes, true, userSettings.unitNet, false)
+					return `${decimalString(value, value >= 100 ? 1 : 2)} ${unit}`
+				}
+				const bandwidth = info.row.original.info.bd
+				if (bandwidth) {
+					return (
+						<div className="flex flex-col gap-0.5 tabular-nums whitespace-nowrap leading-none">
+							<span className="inline-flex items-center gap-1">
+								<ArrowUpIcon aria-label={t`Upload`} className="size-3 text-muted-foreground" />
+								{formatRate(bandwidth[0])}
+							</span>
+							<span className="inline-flex items-center gap-1">
+								<ArrowDownIcon aria-label={t`Download`} className="size-3 text-muted-foreground" />
+								{formatRate(bandwidth[1])}
+							</span>
+						</div>
+					)
+				}
+				return <span className="tabular-nums whitespace-nowrap">{formatRate(val)}</span>
 			},
 		},
 		{

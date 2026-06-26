@@ -27,8 +27,8 @@ const (
 	paused  string = "paused"  // System monitoring is paused
 	pending string = "pending" // System is waiting on initial connection result
 
-	// interval is the default update interval in milliseconds (60 seconds)
-	interval int = 60_000
+	// interval is the default update interval in milliseconds (3 seconds)
+	interval int = 3_000
 	// interval int = 10_000 // Debug interval for faster updates
 
 	// sessionTimeout is the maximum time to wait for SSH connections

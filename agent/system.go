@@ -107,9 +107,9 @@ func (a *Agent) refreshSystemDetails() {
 	}
 }
 
-// attachSystemDetails returns details only for fresh default-interval responses.
+// attachSystemDetails returns details when explicitly requested, or when details changed outside realtime responses.
 func (a *Agent) attachSystemDetails(data *system.CombinedData, cacheTimeMs uint16, includeRequested bool) *system.CombinedData {
-	if cacheTimeMs != defaultDataCacheTimeMs || (!includeRequested && !a.detailsDirty) {
+	if !includeRequested && (cacheTimeMs == realtimeDataCacheTimeMs || !a.detailsDirty) {
 		return data
 	}
 
@@ -258,6 +258,7 @@ func (a *Agent) getSystemStats(cacheTimeMs uint16) system.Stats {
 	a.systemInfo.Battery = systemStats.Battery
 	a.systemInfo.Uptime, _ = host.Uptime()
 	a.systemInfo.BandwidthBytes = systemStats.Bandwidth[0] + systemStats.Bandwidth[1]
+	a.systemInfo.BandwidthDir = systemStats.Bandwidth
 	a.systemInfo.Threads = a.systemDetails.Threads
 
 	return systemStats

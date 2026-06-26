@@ -750,8 +750,16 @@ func migrateDeprecatedFields(cd *system.CombinedData, createDetails bool) {
 		cd.Stats.NetworkSent, cd.Stats.NetworkRecv = 0, 0
 	}
 	// migration added 0.19.0
+	if cd.Info.BandwidthDir[0] == 0 && cd.Info.BandwidthDir[1] == 0 && (cd.Stats.Bandwidth[0] != 0 || cd.Stats.Bandwidth[1] != 0) {
+		cd.Info.BandwidthDir = cd.Stats.Bandwidth
+	}
+	// migration added 0.19.0
 	if cd.Info.BandwidthBytes == 0 {
-		cd.Info.BandwidthBytes = uint64(cd.Info.Bandwidth * 1024 * 1024)
+		if cd.Info.BandwidthDir[0] != 0 || cd.Info.BandwidthDir[1] != 0 {
+			cd.Info.BandwidthBytes = cd.Info.BandwidthDir[0] + cd.Info.BandwidthDir[1]
+		} else {
+			cd.Info.BandwidthBytes = uint64(cd.Info.Bandwidth * 1024 * 1024)
+		}
 		cd.Info.Bandwidth = 0
 	}
 	// migration added 0.19.0

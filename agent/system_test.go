@@ -46,15 +46,26 @@ func TestUpdateSystemDetailsMarksDetailsDirty(t *testing.T) {
 	assert.True(t, agent.systemDetails.Podman)
 
 	original := &system.CombinedData{}
-	realTimeResponse := agent.attachSystemDetails(original, 1000, true)
-	assert.Same(t, original, realTimeResponse)
-	assert.Nil(t, realTimeResponse.Details)
+	requestedResponse := agent.attachSystemDetails(original, 1000, true)
+	require.NotNil(t, requestedResponse.Details)
+	assert.NotSame(t, original, requestedResponse)
+	assert.Equal(t, "updated-host", requestedResponse.Details.Hostname)
+	assert.True(t, requestedResponse.Details.Podman)
+	assert.False(t, agent.detailsDirty)
+	assert.Nil(t, original.Details)
+
+	agent.updateSystemDetails(func(details *system.Details) {
+		details.Hostname = "dirty-host"
+	})
+	realtimeResponse := agent.attachSystemDetails(original, realtimeDataCacheTimeMs, false)
+	assert.Same(t, original, realtimeResponse)
+	assert.Nil(t, realtimeResponse.Details)
 	assert.True(t, agent.detailsDirty)
 
-	response := agent.attachSystemDetails(original, defaultDataCacheTimeMs, false)
+	response := agent.attachSystemDetails(original, 3_000, false)
 	require.NotNil(t, response.Details)
 	assert.NotSame(t, original, response)
-	assert.Equal(t, "updated-host", response.Details.Hostname)
+	assert.Equal(t, "dirty-host", response.Details.Hostname)
 	assert.True(t, response.Details.Podman)
 	assert.False(t, agent.detailsDirty)
 	assert.Nil(t, original.Details)
