@@ -266,7 +266,7 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 				const bandwidth = info.row.original.info.bd
 				if (bandwidth) {
 					return (
-						<div className="flex flex-col gap-0.5 tabular-nums whitespace-nowrap leading-none">
+						<div className="flex items-center gap-2 tabular-nums whitespace-nowrap">
 							<span className="inline-flex items-center gap-1">
 								<ArrowUpIcon aria-label={t`Upload`} className="size-3 text-muted-foreground" />
 								{formatRate(bandwidth[0])}
